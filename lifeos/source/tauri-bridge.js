@@ -27,6 +27,21 @@
     lockWorkstation() {
       return invoke("lock_workstation");
     },
+    setWindowMode(mode) {
+      return invoke("set_window_mode", { mode });
+    },
+    exportBackup(state) {
+      return invoke("export_backup", { state });
+    },
+    openDataDir() {
+      return invoke("open_data_dir");
+    },
+    getStartupStatus() {
+      return invoke("get_startup_status");
+    },
+    setStartupEnabled(enabled) {
+      return invoke("set_startup_enabled", { enabled });
+    },
     minimizeWindow() {
       return invoke("minimize_window");
     },

@@ -87,6 +87,7 @@
             <button id="archiveBtn" class="outline-action" type="button">后台盒子</button>
             <button id="customizeBtn" class="icon-btn" type="button" title="定制桌面">⚙</button>
             <button id="openReviewBtn" class="outline-action" type="button">复盘</button>
+            <button id="windowModeBtn" class="icon-btn desktop-only" type="button" title="小窗口模式">▣</button>
             <button id="minimizeAppBtn" class="icon-btn desktop-only" type="button" title="最小化">−</button>
             <button id="exitAppBtn" class="icon-btn danger desktop-only" type="button" title="退出 LifeOS">×</button>
           </div>
@@ -267,6 +268,17 @@
           <span>鸡汤提醒</span>
           <input id="mantraInput" type="text" />
         </label>
+        <div class="customize-add">
+          <h3>桌面与数据</h3>
+          <div class="card-add-actions">
+            <button id="exportBackupBtn" class="outline-action" type="button">导出备份</button>
+            <button id="openDataDirBtn" class="outline-action" type="button">打开数据文件夹</button>
+          </div>
+          <label class="toggle-item inline-toggle">
+            <input id="startupToggleInput" type="checkbox" />
+            <span id="startupStatusText">开机自启：检测中</span>
+          </label>
+        </div>
         <button id="saveSettingsBtn" class="primary-action" value="default" type="submit">保存</button>
       </form>
     </dialog>
@@ -334,6 +346,7 @@
         </div>
         <div class="archive-tabs" role="tablist" aria-label="后台盒子">
           <button class="week-tab active" data-archive-view="reviews" type="button">每日复盘</button>
+          <button class="week-tab" data-archive-view="tasks" type="button">任务归档</button>
           <button class="week-tab" data-archive-view="experience" type="button">经验归档</button>
           <button class="week-tab" data-archive-view="growth" type="button">月度统计</button>
         </div>

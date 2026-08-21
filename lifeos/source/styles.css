@@ -467,6 +467,14 @@ kbd {
   background: #fff1ed;
 }
 
+.danger-text {
+  color: #9f493b;
+}
+
+.inline-toggle {
+  margin-top: 10px;
+}
+
 .field-hint {
   margin: -4px 0 0;
   color: var(--muted);

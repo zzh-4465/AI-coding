@@ -30,6 +30,7 @@ const defaultState = {
   settings: {
     reviewTime: "23:30",
     weekStartDate: "",
+    windowMode: "desktop",
     syncMode: "local",
     mantra: "专注当下，温柔向前。",
     visibleWidgets: {
@@ -127,6 +128,7 @@ const defaultState = {
   tempFiles: [],
   imageCards: [],
   reviews: [],
+  archivedTasks: [],
   archivedProjects: [],
   timer: {
     mode: "timer",
@@ -248,6 +250,8 @@ function normalizeState(nextState) {
   }));
   nextState.project = nextState.projects[0];
   nextState.archivedProjects = nextState.archivedProjects || [];
+  nextState.archivedTasks = nextState.archivedTasks || [];
+  nextState.settings.windowMode = nextState.settings.windowMode || "desktop";
   nextState.growthItems = (nextState.growthItems || []).map((item) => ({
     ...item,
     days: Array.from({ length: 31 }, (_, index) => Number(item.days && item.days[index]) || 0)
@@ -548,6 +552,8 @@ function renderTasks() {
           <button class="outline-action small" type="button" data-task-focus="${escapeAttribute(task.id)}">${active ? "暂停" : "专注"}</button>
           <button class="outline-action small" type="button" data-task-done="${escapeAttribute(task.id)}">${task.done ? "重开" : "完成"}</button>
           <button class="outline-action small" type="button" data-task-to-week="${escapeAttribute(task.id)}">放回周池</button>
+          <button class="outline-action small" type="button" data-task-archive="${escapeAttribute(task.id)}">归档</button>
+          <button class="outline-action small danger-text" type="button" data-task-delete="${escapeAttribute(task.id)}">删除</button>
         </div>
       </article>
     `;
@@ -579,6 +585,14 @@ function renderTasks() {
 
   document.querySelectorAll("[data-task-to-week]").forEach((button) => {
     button.addEventListener("click", () => moveTaskToWeek(button.dataset.taskToWeek));
+  });
+
+  document.querySelectorAll("[data-task-archive]").forEach((button) => {
+    button.addEventListener("click", () => archiveTask(button.dataset.taskArchive));
+  });
+
+  document.querySelectorAll("[data-task-delete]").forEach((button) => {
+    button.addEventListener("click", () => deleteTask(button.dataset.taskDelete));
   });
 
   setupTaskDrag();
@@ -665,6 +679,30 @@ function moveTaskToWeek(taskId) {
   saveState();
   renderAll();
   showToast("已放回周任务池");
+}
+
+function archiveTask(taskId) {
+  const index = state.tasks.findIndex((task) => task.id === taskId);
+  if (index < 0) return;
+  const [task] = state.tasks.splice(index, 1);
+  state.archivedTasks.unshift({
+    ...task,
+    archivedAt: Date.now(),
+    source: "today"
+  });
+  saveState();
+  renderAll();
+  showToast("任务已归档");
+}
+
+function deleteTask(taskId) {
+  const task = findTask(taskId);
+  if (!task) return;
+  if (!confirm(`彻底删除「${task.title}」？`)) return;
+  state.tasks = state.tasks.filter((item) => item.id !== taskId);
+  saveState();
+  renderAll();
+  showToast("任务已删除");
 }
 
 function renderWeekly() {
@@ -1476,6 +1514,7 @@ function setupEvents() {
   byId("openReviewFromBrief").addEventListener("click", openReview);
   byId("setLockScreenBtn").addEventListener("click", setTodayLockScreen);
   byId("setLockFromBriefBtn").addEventListener("click", setTodayLockScreen);
+  byId("windowModeBtn").addEventListener("click", toggleWindowMode);
   byId("minimizeAppBtn").addEventListener("click", () => desktopCall("最小化", () => window.lifeosDesktop.minimizeWindow()));
   byId("exitAppBtn").addEventListener("click", () => {
     if (confirm("退出 LifeOS？")) {
@@ -1597,6 +1636,9 @@ function setupEvents() {
   });
 
   byId("customizeBtn").addEventListener("click", openCustomize);
+  byId("exportBackupBtn").addEventListener("click", exportLifeOSBackup);
+  byId("openDataDirBtn").addEventListener("click", () => desktopCall("打开数据文件夹", () => window.lifeosDesktop.openDataDir()));
+  byId("startupToggleInput").addEventListener("change", (event) => setStartupEnabled(event.target.checked));
   byId("settingsAddProjectBtn").addEventListener("click", openProjectCardDialog);
   byId("settingsAddImageBtn").addEventListener("click", openImageCardDialog);
   byId("saveSettingsBtn").addEventListener("click", () => {
@@ -1906,7 +1948,55 @@ function openCustomize() {
   byId("weekStartDateInput").value = state.settings.weekStartDate || defaultWeekStartDate();
   byId("syncModeInput").value = state.settings.syncMode;
   byId("mantraInput").value = state.settings.mantra;
+  refreshStartupStatus();
   byId("customizeDialog").showModal();
+}
+
+async function toggleWindowMode() {
+  const nextMode = state.settings.windowMode === "compact" ? "desktop" : "compact";
+  const result = await desktopCall(
+    "切换窗口模式",
+    () => window.lifeosDesktop.setWindowMode(nextMode),
+    nextMode === "compact" ? "已切到小窗口" : "已切到桌面模式"
+  );
+  if (result === null && isDesktopApp()) return;
+  state.settings.windowMode = nextMode;
+  byId("windowModeBtn").textContent = nextMode === "compact" ? "▢" : "▣";
+  saveState();
+}
+
+async function exportLifeOSBackup() {
+  const path = await desktopCall(
+    "导出备份",
+    () => window.lifeosDesktop.exportBackup(state),
+    "备份已导出"
+  );
+  if (path) showToast(`备份已保存：${path}`);
+}
+
+async function refreshStartupStatus() {
+  const input = byId("startupToggleInput");
+  const text = byId("startupStatusText");
+  if (!isDesktopApp()) {
+    input.checked = false;
+    input.disabled = true;
+    text.textContent = "开机自启：桌面版可用";
+    return;
+  }
+  const enabled = await desktopCall("检测开机自启", () => window.lifeosDesktop.getStartupStatus());
+  input.disabled = false;
+  input.checked = Boolean(enabled);
+  text.textContent = enabled ? "开机自启：已开启" : "开机自启：未开启";
+}
+
+async function setStartupEnabled(enabled) {
+  const result = await desktopCall(
+    enabled ? "开启自启" : "关闭自启",
+    () => window.lifeosDesktop.setStartupEnabled(enabled),
+    enabled ? "开机自启已开启" : "开机自启已关闭"
+  );
+  byId("startupToggleInput").checked = Boolean(result);
+  byId("startupStatusText").textContent = result ? "开机自启：已开启" : "开机自启：未开启";
 }
 
 function openReview() {
@@ -2020,6 +2110,49 @@ function renderArchive(selectedReviewId = null) {
   document.querySelectorAll("[data-archive-view]").forEach((tab) => {
     tab.classList.toggle("active", tab.dataset.archiveView === state.archiveView);
   });
+
+  if (state.archiveView === "tasks") {
+    byId("archiveContent").innerHTML = state.archivedTasks.map((task) => `
+      <article class="archive-item">
+        <div>
+          <strong>${escapeHtml(task.title)}</strong>
+          <p>${formatDateTime(task.archivedAt || Date.now())} 归档 · 预计 ${task.estimateHours || 1}h · 进度 ${task.progress || 0}%</p>
+        </div>
+        <div class="archive-actions">
+          <button class="tiny-action" type="button" data-restore-task="${escapeAttribute(task.id)}">恢复</button>
+          <button class="tiny-action" type="button" data-hard-delete-task="${escapeAttribute(task.id)}">删除</button>
+        </div>
+      </article>
+    `).join("") || `<p class="muted-line">还没有归档任务。</p>`;
+
+    document.querySelectorAll("[data-restore-task]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const task = state.archivedTasks.find((item) => item.id === button.dataset.restoreTask);
+        if (!task) return;
+        state.archivedTasks = state.archivedTasks.filter((item) => item.id !== task.id);
+        state.tasks.unshift({
+          id: task.id,
+          title: task.title,
+          estimateHours: task.estimateHours || 1,
+          progress: task.progress || 0,
+          actualSeconds: task.actualSeconds || 0,
+          done: Boolean(task.done)
+        });
+        saveState();
+        renderAll();
+        renderArchive();
+      });
+    });
+
+    document.querySelectorAll("[data-hard-delete-task]").forEach((button) => {
+      button.addEventListener("click", () => {
+        state.archivedTasks = state.archivedTasks.filter((item) => item.id !== button.dataset.hardDeleteTask);
+        saveState();
+        renderArchive();
+      });
+    });
+    return;
+  }
 
   if (state.archiveView === "experience") {
     const archived = state.experience.filter((item) => item.archived);

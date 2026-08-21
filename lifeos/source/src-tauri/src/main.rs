@@ -1,3 +1,5 @@
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
 use base64::Engine;
 use serde_json::Value;
 use std::{
@@ -6,6 +8,10 @@ use std::{
     process::Command,
 };
 use tauri::{AppHandle, Manager, WebviewWindow};
+use windows::{
+    Storage::StorageFile,
+    System::UserProfile::LockScreen,
+};
 
 fn app_data_dir(app: &AppHandle) -> Result<PathBuf, String> {
     let dir = app
@@ -18,6 +24,18 @@ fn app_data_dir(app: &AppHandle) -> Result<PathBuf, String> {
 
 fn state_path(app: &AppHandle) -> Result<PathBuf, String> {
     Ok(app_data_dir(app)?.join("state.json"))
+}
+
+fn current_exe_path() -> Result<PathBuf, String> {
+    std::env::current_exe().map_err(|error| format!("Cannot resolve executable path: {error}"))
+}
+
+fn startup_value_name() -> &'static str {
+    "LifeOS"
+}
+
+fn startup_reg_path() -> &'static str {
+    r"HKCU\Software\Microsoft\Windows\CurrentVersion\Run"
 }
 
 fn run_cmd_start(target: &str) -> Result<(), String> {
@@ -143,30 +161,15 @@ fn set_daily_lock_screen(app: AppHandle, png_data_url: String) -> Result<String,
     let image_path = app_data_dir(&app)?.join("LifeOSDailyBrief.png");
     fs::write(&image_path, bytes).map_err(|error| format!("Cannot write lock image: {error}"))?;
 
-    let escaped = image_path.to_string_lossy().replace('\'', "''");
-    let script = format!(
-        r#"
-Add-Type -AssemblyName System.Runtime.WindowsRuntime
-[Windows.Storage.StorageFile, Windows.Storage, ContentType = WindowsRuntime] | Out-Null
-[Windows.System.UserProfile.LockScreen, Windows.System.UserProfile, ContentType = WindowsRuntime] | Out-Null
-$fileOp = [Windows.Storage.StorageFile]::GetFileFromPathAsync('{escaped}')
-$file = [System.WindowsRuntimeSystemExtensions]::AsTask($fileOp).Result
-$op = [Windows.System.UserProfile.LockScreen]::SetImageFileAsync($file)
-[System.WindowsRuntimeSystemExtensions]::AsTask($op).Wait()
-"#
-    );
-
-    let status = Command::new("powershell")
-        .args(["-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", &script])
-        .status()
-        .map_err(|error| format!("Cannot call Windows lock screen API: {error}"))?;
-
-    if !status.success() {
-        return Err(format!(
-            "Saved image, but Windows rejected lock screen update: {}",
-            image_path.display()
-        ));
-    }
+    let path_string = image_path.to_string_lossy().to_string();
+    let file = StorageFile::GetFileFromPathAsync(&path_string.into())
+        .map_err(|error| format!("Cannot prepare lock image: {error}"))?
+        .get()
+        .map_err(|error| format!("Cannot load lock image: {error}"))?;
+    LockScreen::SetImageFileAsync(&file)
+        .map_err(|error| format!("Cannot call Windows lock screen API: {error}"))?
+        .get()
+        .map_err(|error| format!("Windows rejected lock screen update: {error}"))?;
 
     Ok(image_path.to_string_lossy().to_string())
 }
@@ -178,6 +181,71 @@ fn lock_workstation() -> Result<(), String> {
         .spawn()
         .map_err(|error| format!("Cannot lock workstation: {error}"))?;
     Ok(())
+}
+
+#[tauri::command]
+fn set_window_mode(window: WebviewWindow, mode: String) -> Result<(), String> {
+    if mode == "compact" {
+        window.set_fullscreen(false).map_err(|error| format!("Cannot leave fullscreen: {error}"))?;
+        window.set_decorations(true).map_err(|error| format!("Cannot show window frame: {error}"))?;
+        window.set_size(tauri::Size::Logical(tauri::LogicalSize { width: 1180.0, height: 760.0 }))
+            .map_err(|error| format!("Cannot resize window: {error}"))?;
+        window.center().map_err(|error| format!("Cannot center window: {error}"))?;
+    } else {
+        window.set_decorations(false).map_err(|error| format!("Cannot hide window frame: {error}"))?;
+        window.set_fullscreen(true).map_err(|error| format!("Cannot enter fullscreen: {error}"))?;
+    }
+    Ok(())
+}
+
+#[tauri::command]
+fn export_backup(app: AppHandle, state: Value) -> Result<String, String> {
+    let backup_dir = app_data_dir(&app)?.join("backups");
+    fs::create_dir_all(&backup_dir).map_err(|error| format!("Cannot create backup dir: {error}"))?;
+    let now = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map_err(|error| format!("Cannot read system time: {error}"))?
+        .as_secs();
+    let path = backup_dir.join(format!("lifeos-backup-{now}.json"));
+    let data = serde_json::to_string_pretty(&state)
+        .map_err(|error| format!("Cannot serialize backup: {error}"))?;
+    fs::write(&path, data).map_err(|error| format!("Cannot write backup: {error}"))?;
+    Ok(path.to_string_lossy().to_string())
+}
+
+#[tauri::command]
+fn open_data_dir(app: AppHandle) -> Result<(), String> {
+    let dir = app_data_dir(&app)?;
+    run_cmd_start(dir.to_string_lossy().as_ref())
+}
+
+#[tauri::command]
+fn get_startup_status() -> Result<bool, String> {
+    let output = Command::new("reg")
+        .args(["query", startup_reg_path(), "/v", startup_value_name()])
+        .output()
+        .map_err(|error| format!("Cannot query startup: {error}"))?;
+    Ok(output.status.success())
+}
+
+#[tauri::command]
+fn set_startup_enabled(enabled: bool) -> Result<bool, String> {
+    if enabled {
+        let exe = current_exe_path()?;
+        let value = format!("\"{}\"", exe.to_string_lossy());
+        let status = Command::new("reg")
+            .args(["add", startup_reg_path(), "/v", startup_value_name(), "/t", "REG_SZ", "/d", &value, "/f"])
+            .status()
+            .map_err(|error| format!("Cannot enable startup: {error}"))?;
+        if !status.success() {
+            return Err("Windows rejected startup setting".to_string());
+        }
+    } else {
+        let _ = Command::new("reg")
+            .args(["delete", startup_reg_path(), "/v", startup_value_name(), "/f"])
+            .status();
+    }
+    get_startup_status()
 }
 
 #[tauri::command]
@@ -205,6 +273,11 @@ fn main() {
             load_state,
             set_daily_lock_screen,
             lock_workstation,
+            set_window_mode,
+            export_backup,
+            open_data_dir,
+            get_startup_status,
+            set_startup_enabled,
             minimize_window,
             exit_app
         ])
