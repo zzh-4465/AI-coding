@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LifeOS Desktop MVP</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="app" class="app">
+      <section id="briefScreen" class="screen brief-screen active" aria-label="Daily Brief">
+        <div class="paper-texture"></div>
+        <header class="brief-top">
+          <div class="brief-clock">
+            <p id="briefGreeting" class="eyebrow">Good Morning</p>
+            <h1 id="briefTime">00:00</h1>
+            <p id="briefDate" class="date-line">2026.08.20 Thu</p>
+          </div>
+          <div class="brief-art" aria-hidden="true">
+            <svg viewBox="0 0 180 180" role="img">
+              <path class="line" d="M46 120c22 12 69 12 91 0" />
+              <path class="line" d="M68 119c-9-24-9-46 4-66 13 20 13 42 4 66" />
+              <path class="line" d="M90 119c-5-34 0-63 22-87 8 35 1 63-14 87" />
+              <path class="line" d="M108 101c18-20 33-28 48-28-3 19-17 31-42 38" />
+              <path class="line" d="M70 86c-19-14-32-21-47-18 7 17 21 25 43 27" />
+              <path class="line" d="M60 129h62l-8 27H68z" />
+              <path class="fill-note" d="M118 34h38v42h-38z" />
+              <path class="line" d="M127 47h20M127 58h14" />
+            </svg>
+          </div>
+        </header>
+
+        <main class="brief-board">
+          <article class="brief-card mission-brief">
+            <div class="widget-title">
+              <span>今日简报</span>
+              <button id="briefAddTask" class="icon-btn" type="button" title="添加任务">+</button>
+            </div>
+            <div id="briefTasks" class="brief-task-list"></div>
+          </article>
+
+          <article class="brief-card">
+            <div class="widget-title">
+              <span>本周提醒</span>
+              <span class="pin-mark">!</span>
+            </div>
+            <ul id="briefWeekly" class="clean-list"></ul>
+          </article>
+
+          <article class="brief-card">
+            <div class="widget-title">
+              <span>当前计划</span>
+              <span id="briefProjectPercent" class="metric-pill">0%</span>
+            </div>
+            <h2 id="briefProjectTitle" class="project-title">AI 学习项目</h2>
+            <div class="progress-track">
+              <span id="briefProjectBar"></span>
+            </div>
+            <p id="briefProjectNote" class="muted-line"></p>
+          </article>
+        </main>
+
+        <footer class="brief-actions">
+          <button id="enterWorkspace" class="primary-action" type="button">开启今天</button>
+          <button id="setLockFromBriefBtn" class="text-action" type="button">设为今日锁屏</button>
+          <button id="openReviewFromBrief" class="text-action" type="button">今日复盘</button>
+        </footer>
+      </section>
+
+      <section id="workspaceScreen" class="screen workspace-screen" aria-label="Workspace">
+        <header class="workspace-header">
+          <div class="brand-lockup">
+            <button id="backToBrief" class="icon-btn" type="button" title="锁屏简报">‹</button>
+            <div>
+              <p class="eyebrow">LifeOS</p>
+              <h1>工作台</h1>
+            </div>
+          </div>
+          <div class="header-center">
+            <span class="sun-mark">☼</span>
+            <span class="header-message">上午好，专注让一切变得简单。</span>
+            <span id="workspaceDate">2026.08.20</span>
+            <span id="reviewClockBadge" class="soft-badge">23:30 复盘</span>
+          </div>
+          <div class="header-actions">
+            <button id="setLockScreenBtn" class="outline-action" type="button">设为今日锁屏</button>
+            <button id="archiveBtn" class="outline-action" type="button">后台盒子</button>
+            <button id="customizeBtn" class="icon-btn" type="button" title="定制桌面">⚙</button>
+            <button id="openReviewBtn" class="outline-action" type="button">复盘</button>
+            <button id="minimizeAppBtn" class="icon-btn desktop-only" type="button" title="最小化">−</button>
+            <button id="exitAppBtn" class="icon-btn danger desktop-only" type="button" title="退出 LifeOS">×</button>
+          </div>
+        </header>
+
+        <main class="workspace-grid">
+          <aside class="launcher-panel widget" data-widget="launcher">
+            <div class="widget-title">
+              <span>常用工具</span>
+              <button id="addToolBtn" class="icon-btn" type="button" title="添加工具">+</button>
+            </div>
+            <div id="launcherList" class="launcher-list"></div>
+          </aside>
+
+          <section class="today-panel widget" data-widget="today">
+            <div class="widget-title">
+              <span>Today's Mission</span>
+              <span id="todayTotal" class="metric-pill">0h</span>
+            </div>
+            <form id="taskForm" class="inline-form task-form">
+              <input id="taskTitleInput" type="text" placeholder="任务名称" autocomplete="off" />
+              <input id="taskHoursInput" type="number" min="0.25" step="0.25" value="1" aria-label="预计小时" title="预计小时" />
+              <button class="icon-btn dark" type="submit" title="添加任务">+</button>
+            </form>
+            <div class="task-table-head">
+              <span>预计</span>
+              <span>任务</span>
+              <span>进度/效率</span>
+            </div>
+            <div id="taskList" class="task-list" aria-label="今日任务列表"></div>
+            <div class="corner-doodle paperclip-doodle" aria-hidden="true">
+              <svg viewBox="0 0 72 72">
+                <path d="M24 42 42 24c7-7 18 3 10 11L31 56c-10 10-25-5-14-16l24-24c12-12 30 5 16 19L34 58" />
+              </svg>
+            </div>
+          </section>
+
+          <section class="planning-panel widget weekly-widget" data-widget="weekly">
+            <div class="widget-title">
+              <span id="weekPlanTitle">本周计划台</span>
+              <div class="title-actions">
+                <button id="scheduleImageBtn" class="outline-action small" type="button">贴课程表</button>
+                <button id="addWeeklyBtn" class="icon-btn" type="button" title="添加计划">+</button>
+              </div>
+            </div>
+            <input id="scheduleImageInput" type="file" accept="image/*" hidden />
+            <div class="week-tabs" role="tablist" aria-label="周计划视图">
+              <button class="week-tab active" data-week-view="quadrant" type="button">四象限</button>
+              <button class="week-tab" data-week-view="schedule" type="button">课程表</button>
+              <button class="week-tab" data-week-view="checkin" type="button">打卡</button>
+              <button class="week-tab" data-week-view="calendar" type="button">日历</button>
+            </div>
+            <div id="weeklyList" class="weekly-board"></div>
+          </section>
+
+          <aside class="right-panel">
+
+            <section class="widget project-widget" data-widget="project">
+              <div class="widget-title">
+                <span>项目卡片</span>
+                <button id="addProjectCardBtn" class="icon-btn" type="button" title="添加项目">+</button>
+              </div>
+              <div id="projectCards" class="project-card-list"></div>
+            </section>
+
+            <section class="widget" data-widget="experience">
+              <div class="widget-title">
+                <span>经验库</span>
+                <button id="addExperienceBtn" class="icon-btn" type="button" title="添加经验">+</button>
+              </div>
+              <ul id="experienceList" class="clean-list"></ul>
+            </section>
+
+            <section class="widget custom-card-panel" data-widget="customCards">
+              <div class="widget-title">
+                <span>贴图卡片</span>
+                <div class="title-actions">
+                  <button id="addImageCardBtn" class="outline-action small" type="button">添加贴图</button>
+                </div>
+              </div>
+              <input id="customImageInput" type="file" accept="image/*" hidden />
+              <div id="customCards" class="custom-card-list"></div>
+            </section>
+          </aside>
+
+          <section class="bottom-panel">
+            <article class="widget time-widget" data-widget="time">
+              <div class="mode-tabs" role="tablist" aria-label="时间模式">
+                <button class="mode-tab active" data-mode="timer" type="button">Timer</button>
+                <button class="mode-tab" data-mode="pomodoro" type="button">Pomodoro</button>
+                <button class="mode-tab" data-mode="clock" type="button">Clock</button>
+              </div>
+              <div id="timeDisplay" class="time-display">00:00:00</div>
+              <p id="timeCaption" class="muted-line">正计时</p>
+              <label id="pomodoroSetting" class="mini-setting">
+                <span>番茄时长</span>
+                <input id="pomodoroMinutesInput" type="number" min="5" max="120" step="5" value="25" />
+              </label>
+              <div class="time-actions">
+                <button id="timerToggle" class="primary-action small" type="button">Start</button>
+                <button id="timerReset" class="outline-action small" type="button">Reset</button>
+              </div>
+            </article>
+
+            <article class="widget capture-widget" data-widget="capture">
+              <div class="widget-title">
+                <span>随手记</span>
+                <span id="noteCount" class="metric-pill">0</span>
+              </div>
+              <form id="captureForm" class="capture-form">
+                <textarea id="captureInput" rows="3" placeholder="随手记录想法、问题或灵感"></textarea>
+                <button class="icon-btn dark" type="submit" title="保存">↵</button>
+              </form>
+              <div id="noteList" class="note-list"></div>
+            </article>
+
+            <article class="widget reading-widget" data-widget="reading">
+              <div class="widget-title">
+                <span>Today's Reading</span>
+                <kbd>Ctrl Shift A</kbd>
+                <button id="addReadingBtn" class="icon-btn" type="button" title="添加收藏">+</button>
+              </div>
+              <div id="readingList" class="reading-list"></div>
+            </article>
+
+            <article id="dropZone" class="widget temp-widget" data-widget="temp">
+              <div class="widget-title">
+                <span>Temporary Box</span>
+                <button id="sortTempBtn" class="outline-action small" type="button">整理</button>
+              </div>
+              <div class="drop-illustration" aria-hidden="true">
+                <svg viewBox="0 0 140 90">
+                  <path class="line" d="M18 28h40l8 12h56v35H18z" />
+                  <path class="line" d="M33 52h74M42 64h52" />
+                  <path class="leaf" d="M113 34c11-12 18-13 23-11-1 9-8 14-22 16" />
+                </svg>
+              </div>
+              <p class="drop-title">拖拽文件到这里</p>
+              <p class="muted-line">先临时收纳，晚上复盘再整理。</p>
+              <div id="tempList" class="temp-list"></div>
+            </article>
+          </section>
+        </main>
+      </section>
+    </div>
+
+    <dialog id="customizeDialog" class="app-dialog">
+      <form method="dialog" class="dialog-card">
+        <div class="dialog-head">
+          <h2>定制桌面</h2>
+          <button class="icon-btn" data-close-dialog type="button" title="关闭">×</button>
+        </div>
+        <div id="widgetToggles" class="toggle-grid"></div>
+        <div class="customize-add">
+          <h3>添加卡片</h3>
+          <div class="card-add-actions">
+            <button id="settingsAddProjectBtn" class="outline-action" type="button">添加项目</button>
+            <button id="settingsAddImageBtn" class="outline-action" type="button">添加贴图位置</button>
+          </div>
+        </div>
+        <label class="field-row">
+          <span>每日结束时间</span>
+          <input id="reviewTimeInput" type="time" />
+        </label>
+        <label class="field-row">
+          <span>第一周起始</span>
+          <input id="weekStartDateInput" type="date" />
+        </label>
+        <label class="field-row">
+          <span>同步方式</span>
+          <select id="syncModeInput">
+            <option value="local">本地</option>
+            <option value="backup">本地备份</option>
+            <option value="cloud">跨设备同步</option>
+          </select>
+        </label>
+        <label class="field-row">
+          <span>鸡汤提醒</span>
+          <input id="mantraInput" type="text" />
+        </label>
+        <button id="saveSettingsBtn" class="primary-action" value="default" type="submit">保存</button>
+      </form>
+    </dialog>
+
+    <dialog id="reviewDialog" class="app-dialog">
+      <form method="dialog" class="dialog-card review-card">
+        <div class="dialog-head">
+          <h2>今日复盘</h2>
+          <button class="icon-btn" data-close-dialog type="button" title="关闭">×</button>
+        </div>
+        <div id="autoSummary" class="auto-summary"></div>
+        <div id="unfinishedReview" class="unfinished-review"></div>
+        <div class="mood-row" id="moodRow">
+          <button type="button" data-mood="calm">平静</button>
+          <button type="button" data-mood="good">顺利</button>
+          <button type="button" data-mood="tired">有点累</button>
+        </div>
+        <label class="field-block">
+          <span>今日寄语</span>
+          <input id="dailyMessageInput" type="text" placeholder="例如：专注当下，温柔向前。" />
+        </label>
+        <label class="field-block">
+          <span>心情日记</span>
+          <textarea id="reviewText" rows="4"></textarea>
+        </label>
+        <label class="field-block">
+          <span>明天任务</span>
+          <textarea id="tomorrowText" rows="3"></textarea>
+        </label>
+        <div class="dialog-actions">
+          <button id="voiceReviewBtn" class="outline-action" type="button">语音</button>
+          <button id="saveReviewBtn" class="primary-action" value="default" type="submit">保存复盘</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="quickDialog" class="app-dialog">
+      <form method="dialog" class="dialog-card small-card" id="quickForm">
+        <div class="dialog-head">
+          <h2 id="quickDialogTitle">添加</h2>
+          <button class="icon-btn" data-close-dialog type="button" title="关闭">×</button>
+        </div>
+        <div id="quickDialogFields"></div>
+        <button class="primary-action" value="default" type="submit">保存</button>
+      </form>
+    </dialog>
+
+    <dialog id="imagePreviewDialog" class="app-dialog">
+      <div class="dialog-card image-preview-card">
+        <div class="dialog-head">
+          <h2 id="imagePreviewTitle">查看图片</h2>
+          <button class="icon-btn" data-close-dialog type="button" title="关闭">×</button>
+        </div>
+        <div class="image-preview-stage">
+          <img id="imagePreviewImg" alt="预览图片" />
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="archiveDialog" class="app-dialog">
+      <div class="dialog-card archive-card">
+        <div class="dialog-head">
+          <h2>后台盒子</h2>
+          <button class="icon-btn" data-close-dialog type="button" title="关闭">×</button>
+        </div>
+        <div class="archive-tabs" role="tablist" aria-label="后台盒子">
+          <button class="week-tab active" data-archive-view="reviews" type="button">每日复盘</button>
+          <button class="week-tab" data-archive-view="experience" type="button">经验归档</button>
+          <button class="week-tab" data-archive-view="growth" type="button">月度统计</button>
+        </div>
+        <div id="archiveContent" class="archive-content"></div>
+      </div>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="./tauri-bridge.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
