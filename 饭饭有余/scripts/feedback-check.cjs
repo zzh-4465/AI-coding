@@ -1,0 +1,61 @@
+const assert = require('node:assert/strict');
+const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const fs = require('node:fs');
+
+(async () => {
+  const browser = await chromium.launch({ headless: true, ...(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {}) });
+  try {
+    const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    const errors = [];
+    page.on('pageerror', error => errors.push(error.message));
+    await page.clock.install({ time: new Date('2026-09-01T12:00:00+08:00') });
+    await page.goto(process.env.APP_URL || 'http://127.0.0.1:5173/', { waitUntil: 'domcontentloaded' });
+    await page.locator('.onboard-budget input').fill('1000');
+    assert.equal(await page.locator('.allocation-head > span').innerText(), '100%');
+    fs.mkdirSync('docs/verification', { recursive: true });
+    await page.screenshot({ path: 'docs/verification/ratio-partition.png', fullPage: true });
+    await page.getByRole('button', { name: '开始饭饭有余' }).click();
+    await page.getByRole('button', { name: '愿望', exact: true }).click();
+    const nav = await page.locator('.bottom-nav').boundingBox();
+    assert.ok(Math.abs(nav.y + nav.height - 844) < 2, 'short-page navigation must stay at viewport bottom');
+    await page.screenshot({ path: 'docs/verification/mobile-navigation.png', animations: 'disabled' });
+    await page.getByRole('button', { name: '添加一个愿望' }).click();
+    await page.evaluate(() => window.fanfanGoBack());
+    assert.equal(await page.locator('.sheet-backdrop').count(), 0);
+    await page.evaluate(() => window.fanfanGoBack());
+    assert.equal(await page.locator('.bottom-nav .active').innerText(), '今日');
+    await page.getByRole('button', { name: '资金池', exact: true }).click();
+    await page.locator('.pool-card').first().click();
+    assert.equal(await page.evaluate(() => window.fanfanGoBack()), true);
+    await page.locator('.funds-intro').waitFor();
+    await page.getByRole('button', { name: '今日', exact: true }).click();
+    await page.locator('.today-hero').waitFor();
+    const initialBudget = await page.evaluate(() => JSON.parse(localStorage.getItem('fanfan-youyu-app-v5-android-clean')).dailyFoodBudgets['2026-09-01']);
+    await page.getByRole('button', { name: '设置', exact: true }).click();
+    await page.getByRole('button', { name: /资金池转账/ }).click();
+    await page.locator('.transfer-sheet .amount-field input').fill('30');
+    await page.getByRole('button', { name: '确认转账', exact: true }).click();
+    assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('fanfan-youyu-app-v5-android-clean')).dailyFoodBudgets['2026-09-01']), initialBudget + 1);
+    await page.evaluate(() => {
+      const key = 'fanfan-youyu-app-v5-android-clean';
+      const data = JSON.parse(localStorage.getItem(key));
+      data.lastBudgetMonth = '2026-08';
+      data.transactions = [{ id: 1, date: '2026-08-31', pool: 'food', amount: -10, title: '八月午饭' }];
+      localStorage.setItem(key, JSON.stringify(data));
+    });
+    await page.reload();
+    await page.locator('.today-hero').waitFor();
+    assert.ok(await page.evaluate(() => JSON.parse(localStorage.getItem('fanfan-youyu-app-v5-android-clean')).dailyFoodBudgets['2026-09-01']) > 0, 'first-day income must generate a positive daily budget');
+    await page.getByRole('button', { name: '账本', exact: true }).click();
+    await page.getByLabel('选择年月').fill('2026-08');
+    await page.getByRole('button', { name: '2026年8月31日', exact: true }).click();
+    await page.getByText('2026 年 8 月 31 日', { exact: true }).waitFor();
+    assert.equal(await page.getByText('9 月 31 日', { exact: true }).count(), 0);
+    const count = await page.evaluate(() => JSON.parse(localStorage.getItem('fanfan-youyu-app-v5-android-clean')).transactions.length);
+    await page.reload();
+    await page.locator('.today-hero').waitFor();
+    assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('fanfan-youyu-app-v5-android-clean')).transactions.length), count);
+    assert.deepEqual(errors, []);
+    console.log('PASS: partition allocation, mobile navigation, layered back, legacy dates, rollover idempotency, no page errors');
+  } finally { await browser.close(); }
+})().catch(error => { console.error(error); process.exitCode = 1; });

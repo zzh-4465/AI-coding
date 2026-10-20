@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">饭饭有余</string>
+    <string name="title_activity_main">饭饭有余</string>
+    <string name="package_name">com.fanfanyouyu.app</string>
+    <string name="custom_url_scheme">com.fanfanyouyu.app</string>
+</resources>

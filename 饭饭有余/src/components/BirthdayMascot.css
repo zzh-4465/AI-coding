@@ -1,0 +1,74 @@
+.birthday-mascot{width:100%;height:100%;display:block;position:relative;container-type:inline-size}
+.birthday-age{position:absolute;left:20.3%;top:46.9%;display:flex;font-family:'Arial Rounded MT Bold',Arial,sans-serif;font-size:10cqw;font-weight:900;line-height:.9;color:#f26b4b;letter-spacing:-.05em;text-shadow:1px 1px #cf4e34,-.5px -.5px #ffaf81;pointer-events:none}
+.birthday-age i{position:relative;font-style:normal}
+.birthday-age i:before{content:'';position:absolute;width:17%;height:35%;left:43%;top:-30%;border-radius:70% 20% 70% 35%;background:linear-gradient(#fffcd1,#ffc74b 60%,#f89b35);box-shadow:0 0 4px #ffda85;transform:rotate(-15deg)}
+.action-laugh .birthday-age{animation:5.6s step-end infinite birthdayLaughCandles}
+.action-blow .birthday-age{left:20.7%;top:46.7%}
+.action-blow .birthday-age i:before{display:none}
+.action-celebrate .birthday-age{left:24.2%;top:37.9%}
+.birthday-sprite{transform-origin:50% 88%;background-position:50% 0;background-repeat:no-repeat;background-size:300% 200%;animation:3.2s ease-in-out infinite birthdayBreathe;display:block;position:absolute;inset:0}
+.action-ordinary .birthday-sprite{background-position:0 0;animation:none}
+.action-laugh .birthday-sprite{background-position:50% 0;animation:5.6s step-end infinite birthdayLaughPoses,5.6s ease-in-out infinite birthdayLaughBreath}
+.action-blow .birthday-sprite{background-position:50% 100%;animation:2.4s ease-in-out infinite birthdayBlow}
+.action-celebrate .birthday-sprite{background-position:100% 100%;animation:2.8s ease-in-out infinite birthdayCelebrate}
+.birthday-sparks{pointer-events:none;position:absolute;inset:0}
+.birthday-sparks i{color:#e0b459;opacity:0;font-size:13px;font-style:normal;animation:3.2s ease-out infinite birthdaySpark;position:absolute;top:35%;left:12%}
+.birthday-sparks i:nth-child(2){color:#db947e;animation-delay:.6s;top:20%;left:83%}
+.birthday-sparks i:nth-child(3){animation-delay:1.3s;top:63%;left:88%}
+.birthday-sparks i:nth-child(4){color:#a5bdc8;animation-delay:1.9s;top:65%;left:5%}
+.birthday-sparks i:nth-child(5){animation-delay:2.5s;top:6%;left:46%}
+.action-celebrate .birthday-sparks i{animation-duration:2.8s}
+.birthday-stage-resting.action-idle .birthday-sprite,.birthday-stage-sleepy.action-idle .birthday-sprite{animation-duration:5s}
+.rice-mascot.birthday-dog-mascot{filter:none;flex-shrink:0;width:76px;height:76px;animation:none}
+.global-pet-button .rice-mascot.birthday-dog-mascot{width:82px;height:82px;transform:none}
+.screen-today .companion-character .rice-mascot.birthday-dog-mascot{width:138px;height:138px;transform:none}
+.header-pet .rice-mascot.birthday-dog-mascot{width:48px;height:48px;transform:none}
+.skin-card .rice-mascot.birthday-dog-mascot{width:88px;height:88px;margin:-8px 0 0;transform:none}
+.skin-card.birthday-card{opacity:1}
+.skin-card.birthday-card:disabled{opacity:.65}
+.skin-card .birthday-tag{color:#b56a4b}
+.birthday-reveal{text-align:center;background:radial-gradient(at 50% 35%,#fff2cf,#fffaf0 65%);border:1px solid #eedbbc;border-radius:18px;margin:18px 0;padding:20px 14px 16px;animation:.65s ease-out both birthdayReveal;position:relative;overflow:hidden}
+.birthday-reveal h3{color:#a96542;margin:0 0 5px;font-size:23px}
+.birthday-reveal p{color:#96795d;margin:4px 0 10px;font-size:12px}
+.birthday-reveal .birthday-preview{width:224px;max-width:100%;height:224px;margin:0 auto}
+.birthday-motion-actions{flex-wrap:wrap;justify-content:center;gap:7px;display:flex}
+.birthday-motion-actions button{color:#886448;cursor:pointer;background:#fffcf5;border:1px solid #e9d6b7;border-radius:20px;padding:8px 12px;font-size:12px}
+.birthday-motion-actions button[aria-pressed=true]{color:#fff;background:#b67251;border-color:#b67251}
+.birthday-test-note{color:var(--muted);justify-content:space-between;align-items:center;gap:12px;margin:12px 0;font-size:11px;display:flex}
+.birthday-test-note button{color:#a96542;cursor:pointer;background:0 0;border:0;flex-shrink:0;padding:8px 0;text-decoration:underline}
+@keyframes birthdayBreathe{0%,to{transform:translateY(0)rotate(-1deg)}
+50%{transform:translateY(-3px)rotate(1deg)}
+}
+@keyframes birthdayLaughBreath{0%,to{transform:scaleY(1)}
+50%{transform:scaleY(1.0015)}
+}
+@keyframes birthdayLaughPoses{
+0%,100%{background-position:50% 0}
+18%{background-position:100% 0}
+38%{background-position:0 100%}
+60%{background-position:100% 0}
+82%{background-position:50% 0}
+}
+@keyframes birthdayLaughCandles{
+0%,100%{left:20.3%;top:46.9%}
+18%,60%{left:25.8%;top:46.1%}
+38%{left:22.7%;top:39.5%}
+82%{left:20.3%;top:46.9%}
+}
+@keyframes birthdayBlow{0%,to{transform:rotate(0)}
+50%{transform:rotate(-2deg)translateY(-2px)}
+}
+@keyframes birthdayCelebrate{0%,to{transform:translateY(0)rotate(-1deg)}
+50%{transform:translateY(-3px)rotate(1deg)}
+}
+@keyframes birthdaySpark{0%,to{opacity:0;transform:translateY(5px)scale(.5)}
+25%{opacity:.9}
+85%{opacity:0;transform:translateY(-22px)scale(1.2)rotate(50deg)}
+}
+@keyframes birthdayReveal{0%{opacity:0;transform:translateY(15px)scale(.97)}
+to{opacity:1;transform:none}
+}
+@media (prefers-reduced-motion:reduce){.birthday-mascot *,.birthday-reveal{animation:none!important}
+.action-laugh .birthday-sprite{background-position:100% 0}
+.action-laugh .birthday-age{left:25.8%;top:46.1%}
+}

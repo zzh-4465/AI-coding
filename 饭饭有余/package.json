@@ -1,0 +1,37 @@
+{
+  "name": "fanfan-youyu-prototype",
+  "private": true,
+  "version": "2.9.1",
+  "type": "module",
+  "scripts": {
+    "start": "node server/ai-proxy.mjs",
+    "dev": "vite --host 0.0.0.0",
+    "dev:ai": "node server/ai-proxy.mjs",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "android:sync": "npm run build && cap sync android",
+    "android:apk": "npm run android:sync && cd android && gradlew.bat assembleDebug",
+    "test": "node --test scripts/finance-check.mjs scripts/budget-check.mjs scripts/calendar-storage-check.mjs scripts/forecast-check.mjs scripts/quick-entry-parser-check.mjs scripts/ai-normalize-check.mjs scripts/report-check.mjs scripts/pet-check.mjs scripts/quick-batch-check.mjs",
+    "test:ai-ui": "node scripts/ai-ui-check.cjs",
+    "test:accounts": "node --test scripts/account-client-check.mjs && npm test --prefix server",
+    "test:accounts-ui": "node scripts/account-ui-check.mjs",
+    "test:ui": "node scripts/feedback-check.cjs && node scripts/calendar-feedback-check.cjs && node scripts/data-safety-check.cjs && node scripts/rolling-backup-check.cjs",
+    "test:wish-swipe": "node scripts/wish-swipe-check.cjs"
+  },
+  "dependencies": {
+    "@capacitor/android": "6.2.1",
+    "@capacitor/core": "6.2.1",
+    "@vitejs/plugin-react": "6.1.0",
+    "lucide-react": "1.34.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "vite": "8.2.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "6.2.1",
+    "playwright": "^1.64.1"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  }
+}

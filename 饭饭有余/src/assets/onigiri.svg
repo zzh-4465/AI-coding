@@ -1,0 +1,423 @@
+<svg class="mascot" id="mascot" viewBox="0 0 460 500" data-mood="idle" data-state="normal" aria-hidden="true">
+          <!-- SVG paint resources (gradients, blur filters, body clip) -->
+          <defs>
+            <radialGradient id="riceGrad" cx="37%" cy="26%" r="78%">
+              <stop offset="0" stop-color="#fffef9"/>
+              <stop offset=".56" stop-color="#fffef9"/>
+              <stop offset=".86" stop-color="#faf9f2"/>
+              <stop offset="1" stop-color="#eceee5"/>
+            </radialGradient>
+            <radialGradient id="handGrad" cx="35%" cy="24%" r="80%">
+              <stop offset="0" stop-color="#fffef9"/>
+              <stop offset=".75" stop-color="#fbf3e3"/>
+              <stop offset="1" stop-color="#f0e3cd"/>
+            </radialGradient>
+            <linearGradient id="noriGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#315246"/>
+              <stop offset=".35" stop-color="#27473b"/>
+              <stop offset="1" stop-color="#1b332a"/>
+            </linearGradient>
+            <linearGradient id="bagGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#d9a475"/>
+              <stop offset=".58" stop-color="#c48857"/>
+              <stop offset="1" stop-color="#a86740"/>
+            </linearGradient>
+            <radialGradient id="coinGrad" cx="34%" cy="28%" r="74%">
+              <stop offset="0" stop-color="#ffe9a5"/>
+              <stop offset=".62" stop-color="#eec45f"/>
+              <stop offset="1" stop-color="#d3a33d"/>
+            </radialGradient>
+            <radialGradient id="bodyGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0" stop-color="#fffef9" stop-opacity=".85"/>
+              <stop offset="1" stop-color="#fffef9" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="softBlur" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="5"/>
+            </filter>
+            <filter id="blushBlur" x="-70%" y="-70%" width="240%" height="240%">
+              <feGaussianBlur stdDeviation="3.5"/>
+            </filter>
+            <filter id="shadowBlur" x="-50%" y="-80%" width="200%" height="260%">
+              <feGaussianBlur stdDeviation="7"/>
+            </filter>
+            <clipPath id="bodyClip">
+              <path d="M230 65C259 65 279 88 299 116L387 287C423 356 381 421 310 425L150 425C78 421 37 356 73 287L161 116C181 88 201 65 230 65Z"/>
+            </clipPath>
+          </defs>
+
+          <ellipse class="mascot-shadow" cx="230" cy="438" rx="104" ry="13"
+                   fill="#2c4030" opacity=".2" filter="url(#shadowBlur)"/>
+
+          <!-- Character layers: cowlick, hands, body, face, money bag -->
+          <g id="character" data-character>
+            <g class="character-idle">
+              <!-- the one rice-grain cowlick -->
+              <g class="ahoge">
+                <path d="M234 74C229 55 237 40 253 31C259 45 251 63 240 73Z"
+                      fill="url(#riceGrad)" stroke="#26332b" stroke-width="4.4" stroke-linejoin="round"/>
+                <path d="M239 64C243 53 247 44 252 38" fill="none" stroke="#decfb5"
+                      stroke-width="2.2" stroke-linecap="round" opacity=".9"/>
+              </g>
+
+              <!-- short ball hands, no fingers, no legs anywhere -->
+              <g class="hand hand--l">
+                <g class="hand-ball">
+                  <circle cx="59" cy="348" r="23.5"
+                          fill="url(#handGrad)" stroke="#26332b" stroke-width="5.2"/>
+                  <ellipse cx="49" cy="338" rx="7" ry="8.5"
+                           fill="#fffef9" opacity=".72"/>
+                </g>
+              </g>
+              <g class="hand hand--r">
+                <g class="hand-ball">
+                  <circle cx="401" cy="348" r="23.5"
+                          fill="url(#handGrad)" stroke="#26332b" stroke-width="5.2"/>
+                  <ellipse cx="391" cy="338" rx="7" ry="8.5"
+                           fill="#fffef9" opacity=".72"/>
+                </g>
+              </g>
+
+              <g class="body-breathe">
+                <g class="body">
+                  <!-- rice body -->
+                  <path d="M230 65C259 65 279 88 299 116L387 287C423 356 381 421 310 425L150 425C78 421 37 356 73 287L161 116C181 88 201 65 230 65Z"
+                        fill="url(#riceGrad)" stroke="#26332b" stroke-width="6.2" stroke-linejoin="round"/>
+
+                  <g clip-path="url(#bodyClip)">
+                    <ellipse cx="184" cy="151" rx="111" ry="81" fill="url(#bodyGlow)"/>
+                    <path d="M126 185C132 126 166 94 216 87" fill="none" stroke="#fffef9"
+                          stroke-width="18" stroke-linecap="round" opacity=".56" filter="url(#softBlur)"/>
+
+                    <!-- faint rice grain texture -->
+                    <g opacity=".8">
+                      <ellipse cx="146" cy="124" rx="5.3" ry="10.5" transform="rotate(-28 146 124)"
+                               fill="#fbf3e3" stroke="#e7d9c0" stroke-width="1.1"/>
+                      <ellipse cx="294" cy="105" rx="4.8" ry="9.6" transform="rotate(32 294 105)"
+                               fill="#fbf3e3" stroke="#e7d9c0" stroke-width="1.1"/>
+                      <ellipse cx="330" cy="181" rx="4.1" ry="8.4" transform="rotate(68 330 181)"
+                               fill="none" stroke="#e6d7bd" stroke-width="1.3"/>
+                      <ellipse cx="123" cy="231" rx="4.5" ry="9" transform="rotate(-61 123 231)"
+                               fill="none" stroke="#e6d7bd" stroke-width="1.3"/>
+                      <circle cx="185" cy="99" r="1.5" fill="#e5d6bd" opacity=".65"/>
+                      <circle cx="262" cy="89" r="1.2" fill="#e5d6bd" opacity=".55"/>
+                      <circle cx="344" cy="250" r="1.4" fill="#e5d6bd" opacity=".45"/>
+                    </g>
+
+                    <!-- nori belt -->
+                    <path d="M36 326C136 312 324 312 424 326L424 470L36 470Z" fill="url(#noriGrad)"/>
+                    <path d="M36 326C136 312 324 312 424 326" fill="none" stroke="#547463"
+                          stroke-width="3" opacity=".46"/>
+                    <path d="M36 338C136 324 324 324 424 338" fill="none" stroke="#12251d"
+                          stroke-width="7" opacity=".19"/>
+                    <g opacity=".3" stroke="#8aa493" stroke-width="1.6" stroke-linecap="round">
+                      <path d="M137 331C135 357 136 388 140 415" opacity=".45"/>
+                      <path d="M226 327C225 363 225 397 226 424" opacity=".3"/>
+                      <path d="M319 331C321 359 320 389 317 415" opacity=".4"/>
+                    </g>
+                    <g fill="#587565" opacity=".38">
+                      <ellipse cx="102" cy="354" rx="1.7" ry="1.2" transform="rotate(18 102 354)"/>
+                      <ellipse cx="171" cy="392" rx="1.4" ry="1" transform="rotate(-24 171 392)"/>
+                      <ellipse cx="279" cy="348" rx="1.5" ry="1.1" transform="rotate(12 279 348)"/>
+                      <ellipse cx="345" cy="382" rx="1.7" ry="1.2" transform="rotate(30 345 382)"/>
+                      <ellipse cx="215" cy="407" rx="1.2" ry=".9" transform="rotate(-8 215 407)"/>
+                      <ellipse cx="370" cy="341" rx="1.2" ry=".9"/>
+                    </g>
+                    <g opacity=".12" fill="#d7e5d4">
+                      <ellipse cx="205" cy="346" rx="78" ry="4" transform="rotate(-1 205 346)"/>
+                      <ellipse cx="154" cy="370" rx="36" ry="2" transform="rotate(-5 154 370)"/>
+                    </g>
+
+                    <!-- warm bottom shade, kept subtle -->
+                    <ellipse cx="230" cy="486" rx="188" ry="72" fill="#b89a6e" opacity=".1" filter="url(#softBlur)"/>
+                  </g>
+
+                  <!-- crisp body outline again over the clipped texture -->
+                  <path d="M230 65C259 65 279 88 299 116L387 287C423 356 381 421 310 425L150 425C78 421 37 356 73 287L161 116C181 88 201 65 230 65Z"
+                        fill="none" stroke="#26332b" stroke-width="6.2" stroke-linejoin="round"/>
+
+                  <!-- Face: default expression + state-specific eye and mouth groups -->
+                  <g class="face">
+                    <ellipse class="blush" cx="145" cy="260" rx="24" ry="11.5" fill="#f0ada1" opacity=".58" filter="url(#blushBlur)"/>
+                    <ellipse class="blush" cx="315" cy="260" rx="24" ry="11.5" fill="#f0ada1" opacity=".58" filter="url(#blushBlur)"/>
+
+                    <g class="eye" transform="translate(181 228)">
+                      <g class="eye-track">
+                        <g class="eye-inner">
+                          <ellipse rx="11.4" ry="16.4" fill="#28342d"/>
+                          <circle cx="-4" cy="-6" r="3.2" fill="#fffdf7"/>
+                          <circle cx="3.8" cy="5.5" r="1.55" fill="#fffdf7" opacity=".82"/>
+                        </g>
+                      </g>
+                    </g>
+                    <g class="eye" transform="translate(279 228)">
+                      <g class="eye-track">
+                        <g class="eye-inner">
+                          <ellipse rx="11.4" ry="16.4" fill="#28342d"/>
+                          <circle cx="-4" cy="-6" r="3.2" fill="#fffdf7"/>
+                          <circle cx="3.8" cy="5.5" r="1.55" fill="#fffdf7" opacity=".82"/>
+                        </g>
+                      </g>
+                    </g>
+
+                    <g class="eye-happy" fill="none" stroke="#28342d" stroke-width="5.4" stroke-linecap="round">
+                      <path d="M167 228C173 217 183 213 192 220"/>
+                      <path d="M265 220C274 213 284 217 290 228"/>
+                    </g>
+
+                    <g class="eye-dizzy" fill="none" stroke="#28342d" stroke-width="5" stroke-linecap="round">
+                      <path d="M173 220L189 236M189 220L173 236"/>
+                      <path d="M271 220L287 236M287 220L271 236"/>
+                    </g>
+
+                    <g class="eye-sleepy" fill="none" stroke="#28342d" stroke-width="4.8" stroke-linecap="round">
+                      <path d="M168 226C174 235 187 235 194 226"/>
+                      <path d="M168 226L160 222"/>
+                      <path d="M265 226C272 235 285 235 292 226"/>
+                      <path d="M292 226L300 222"/>
+                    </g>
+
+                    <g class="eye-blank">
+                      <path d="M168 225C174 221 188 221 194 225"
+                            fill="none" stroke="#28342d" stroke-width="3.8" stroke-linecap="round"/>
+                      <ellipse cx="181" cy="231" rx="8.2" ry="4.4" fill="#28342d"/>
+                      <circle cx="178" cy="229.5" r="1.3" fill="#fffdf7" opacity=".76"/>
+                      <path d="M266 225C272 221 286 221 292 225"
+                            fill="none" stroke="#28342d" stroke-width="3.8" stroke-linecap="round"/>
+                      <ellipse cx="279" cy="231" rx="8.2" ry="4.4" fill="#28342d"/>
+                      <circle cx="276" cy="229.5" r="1.3" fill="#fffdf7" opacity=".76"/>
+                    </g>
+
+                    <g class="eye-low" fill="none" stroke="#28342d" stroke-width="5.2" stroke-linecap="round">
+                      <path d="M171 218L191 238M191 218L171 238"/>
+                      <path d="M269 218L289 238M289 218L269 238"/>
+                    </g>
+
+                    <path class="mouth-default" d="M218 260C223 267 227 267 230 261C233 267 237 267 242 260"
+                          fill="none" stroke="#28342d" stroke-width="4.2" stroke-linecap="round"/>
+                    <g class="mouth-happy">
+                      <path d="M214 255C218 273 242 273 246 255C236 261 224 261 214 255Z"
+                            fill="#28342d" stroke="#28342d" stroke-width="1.5" stroke-linejoin="round"/>
+                      <path d="M224 264C227 271 233 271 236 264C232 267 228 267 224 264Z"
+                            fill="#ea9a8f"/>
+                    </g>
+                    <path class="mouth-dizzy" d="M216 262C222 255 228 268 234 261C240 254 245 263 246 259"
+                          fill="none" stroke="#28342d" stroke-width="3.8" stroke-linecap="round"/>
+                    <ellipse class="mouth-oops" cx="230" cy="263" rx="6.5" ry="8.2" fill="#28342d"/>
+                    <g class="mouth-yawn">
+                      <ellipse cx="230" cy="264" rx="7" ry="9.5" fill="#28342d"/>
+                      <ellipse cx="230" cy="268.5" rx="4" ry="2.5" fill="#e8968b"/>
+                    </g>
+                    <path class="mouth-flat" d="M222 261C227 263 233 263 238 261"
+                          fill="none" stroke="#28342d" stroke-width="4.2" stroke-linecap="round"/>
+                    <path class="mouth-frown" d="M219 266C225 259 235 259 241 266"
+                          fill="none" stroke="#28342d" stroke-width="4" stroke-linecap="round"/>
+                    <path class="tear" d="M291 245C295 251 298 256 298 260A6 6 0 0 1 286 260C286 256 288 251 291 245Z"
+                          fill="#a9ccd3"/>
+
+                  </g>
+
+                  <!-- the money bag that changes with the mood -->
+                  <g class="money-bag">
+                    <g class="bag-strap">
+                      <path d="M64 249C108 264 155 285 199 304C240 322 279 334 316 335L315 349C277 348 238 336 197 318C153 299 108 279 68 265Z"
+                            fill="#6f4c34" stroke="#3f2d22" stroke-width="3.2" stroke-linejoin="round"/>
+                      <path d="M83 259C124 274 166 293 206 312C245 330 281 340 315 341"
+                            fill="none" stroke="#e7cda7" stroke-width="1.5"
+                            stroke-dasharray="3 5" stroke-linecap="round" opacity=".55"/>
+                      <g transform="translate(163 292) rotate(20)">
+                        <rect x="-12" y="-8" width="24" height="16" rx="3.5"
+                              fill="#e7bd5f" stroke="#3f2d22" stroke-width="2"/>
+                        <rect x="-7" y="-3.8" width="14" height="7.6" rx="1.5"
+                              fill="none" stroke="#6a4a30" stroke-width="2"/>
+                        <path d="M0 -7V7" stroke="#6a4a30" stroke-width="1.8" stroke-linecap="round"/>
+                        <path d="M-9 -5H-4" stroke="#fff2c8" stroke-width="1.4"
+                              stroke-linecap="round" opacity=".6"/>
+                      </g>
+                      <circle cx="70" cy="255" r="3" fill="#e7bd5f"
+                              stroke="#3f2d22" stroke-width="1.4"/>
+                    </g>
+                    <circle cx="315" cy="336" r="5.2" fill="#e7bd5f"
+                            stroke="#493528" stroke-width="1.8"/>
+
+                    <g class="bag-pouch">
+                      <ellipse cx="334" cy="383" rx="48" ry="12" fill="#182a20"
+                               opacity=".18" filter="url(#softBlur)"/>
+
+                      <g class="bag-hang">
+                      <g class="bag-full">
+                        <path d="M294 329C292 343 291 357 296 370C302 386 317 393 338 393C359 393 373 384 379 366C382 354 381 341 378 329C370 317 355 311 336 311C317 311 302 318 294 329Z"
+                              fill="url(#bagGrad)" stroke="#493528" stroke-width="4.2" stroke-linejoin="round"/>
+                        <ellipse cx="336" cy="317" rx="39" ry="14"
+                                 fill="#39291f" stroke="#493528" stroke-width="3.2"/>
+
+                        <g class="bag-coins">
+                          <g class="bag-coin bag-coin--a" transform="translate(319 312) rotate(-4)">
+                            <circle r="12.5" fill="url(#coinGrad)" stroke="#7d5a28" stroke-width="2.2"/>
+                            <path d="M-4-4L0 0M4-4L0 0M0 0V5M-4 2H4M-4 4H4"
+                                  fill="none" stroke="#8b6425" stroke-width="1.8" stroke-linecap="round"/>
+                            <path d="M-6-6C-3-9 2-9 5-7" fill="none" stroke="#fff5d4"
+                                  stroke-width="1.4" stroke-linecap="round" opacity=".8"/>
+                          </g>
+                          <g class="bag-coin bag-coin--b" transform="translate(348 309) rotate(-17)">
+                            <circle r="12.5" fill="url(#coinGrad)" stroke="#7d5a28" stroke-width="2.2"/>
+                            <path d="M-4-4L0 0M4-4L0 0M0 0V5M-4 2H4M-4 4H4"
+                                  fill="none" stroke="#8b6425" stroke-width="1.8" stroke-linecap="round"/>
+                            <path d="M-6-6C-3-9 2-9 5-7" fill="none" stroke="#fff5d4"
+                                  stroke-width="1.4" stroke-linecap="round" opacity=".8"/>
+                          </g>
+                        </g>
+
+                        <path d="M298 311C315 321 357 321 374 311C379 324 382 344 380 360C378 379 364 393 341 393C318 393 294 382 290 362C288 345 291 326 298 311Z"
+                              fill="url(#bagGrad)" stroke="#493528" stroke-width="4.2" stroke-linejoin="round"/>
+                        <path d="M301 314C316 323 356 323 371 314" fill="none"
+                              stroke="#d2a072" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+                        <path d="M303 318C317 327 355 327 369 318" fill="none"
+                              stroke="#f2dfc0" stroke-width="1.4" stroke-dasharray="2 5"
+                              stroke-linecap="round" opacity=".55"/>
+
+                        <g class="bag-wrinkles" fill="none" stroke="#704a30"
+                           stroke-width="2.1" stroke-linecap="round">
+                          <path d="M307 341C322 348 349 348 365 340" opacity=".55"/>
+                          <path d="M312 367C326 373 346 372 359 365" opacity=".42"/>
+                        </g>
+
+                        <path d="M300 355C317 347 355 347 371 355" fill="none"
+                              stroke="#493528" stroke-width="9" stroke-linecap="round"/>
+                        <path d="M300 355C317 347 355 347 371 355" fill="none"
+                              stroke="#b97b4e" stroke-width="4.5" stroke-linecap="round"/>
+                        <rect x="329" y="346" width="13" height="15" rx="3"
+                              fill="#e7bd5f" stroke="#493528" stroke-width="1.8"/>
+                        <rect x="333" y="350" width="5" height="7" rx="1.3" fill="#69482f"/>
+
+                        <path d="M296 338C293 355 297 371 306 381M375 338C378 355 374 371 365 381"
+                              fill="none" stroke="#f2dfc0" stroke-width="1.4"
+                              stroke-dasharray="2 5" stroke-linecap="round" opacity=".42"/>
+                        <circle cx="301" cy="374" r="2.1" fill="#e5bb5e"
+                                stroke="#493528" stroke-width="1.3"/>
+                        <circle cx="367" cy="374" r="2.1" fill="#e5bb5e"
+                                stroke="#493528" stroke-width="1.3"/>
+                      </g>
+
+                      <g class="bag-empty">
+                        <path d="M315 336C317 340 322 344 329 347" fill="none"
+                              stroke="#3f2d22" stroke-width="7" stroke-linecap="round"/>
+                        <path d="M315 336C317 340 322 344 329 347" fill="none"
+                              stroke="#6f4c34" stroke-width="4" stroke-linecap="round"/>
+                        <circle cx="329" cy="347" r="3.2" fill="#e7bd5f"
+                                stroke="#493528" stroke-width="1.5"/>
+
+                        <path d="M303 353C291 363 287 380 292 395C297 411 314 419 336 419C358 419 375 410 379 394C383 378 379 361 369 351C353 343 318 343 303 353Z"
+                              fill="#9d7858" stroke="#493528" stroke-width="4.2" stroke-linejoin="round"/>
+                        <path d="M307 349C319 342 353 342 365 350C355 359 319 360 307 349Z"
+                              fill="#7d583d" stroke="#493528" stroke-width="3" stroke-linejoin="round"/>
+
+                        <ellipse cx="336" cy="412" rx="31" ry="9"
+                                 fill="#33241c" stroke="#493528" stroke-width="2.8"/>
+                        <path d="M304 405C317 416 355 416 368 405" fill="none"
+                              stroke="#493528" stroke-width="7.5" stroke-linecap="round"/>
+                        <path d="M304 405C317 416 355 416 368 405" fill="none"
+                              stroke="#b97b4e" stroke-width="3.6" stroke-linecap="round"/>
+                        <path d="M309 407C320 413 352 413 363 407" fill="none"
+                              stroke="#f0d6ae" stroke-width="1.2" stroke-dasharray="2 4"
+                              stroke-linecap="round" opacity=".55"/>
+
+                        <path d="M298 372C294 387 300 403 311 412M373 372C377 387 371 403 361 412"
+                              fill="none" stroke="#d7bd95" stroke-width="1.5"
+                              stroke-dasharray="2 5" stroke-linecap="round" opacity=".5"/>
+                        <circle cx="300" cy="387" r="2" fill="#e5bb5e"
+                                stroke="#493528" stroke-width="1.2"/>
+                        <circle cx="370" cy="387" r="2" fill="#e5bb5e"
+                                stroke="#493528" stroke-width="1.2"/>
+
+                        <g class="bag-dust" fill="none" stroke="#a39f92"
+                           stroke-width="1.5" stroke-linecap="round">
+                          <path d="M315 420C311 418 309 421 312 424" opacity=".5"/>
+                          <path d="M357 420C361 418 363 421 360 424" opacity=".36"/>
+                        </g>
+
+                        <g class="bag-tag">
+                          <path d="M301 394C291 401 284 408 279 416" fill="none"
+                                stroke="#493528" stroke-width="1.8" stroke-linecap="round"/>
+                          <g transform="translate(264 410) rotate(-12)">
+                            <rect x="0" y="0" width="32" height="20" rx="3.5"
+                                  fill="#fff8e8" stroke="#493528" stroke-width="2"/>
+                            <circle cx="16" cy="5" r="1.8" fill="#493528"/>
+                            <text x="16" y="15.5" text-anchor="middle">0</text>
+                          </g>
+                        </g>
+                      </g>
+                      </g>
+                    </g>
+                  </g>
+
+                </g>
+              </g>
+            </g>
+          </g>
+
+          <!-- Decorative elements that only appear in a specific base state -->
+          <g class="state-fx state-flowers">
+            <g transform="translate(121 157)">
+              <g class="flower">
+                <g transform="rotate(-9) scale(1.05)">
+                  <g fill="#e86855" stroke="#26332b" stroke-width="1.45" stroke-linejoin="round">
+                    <ellipse cx="0" cy="-8" rx="5.2" ry="7.4"/>
+                    <ellipse cx="0" cy="-8" rx="5.2" ry="7.4" transform="rotate(72)"/>
+                    <ellipse cx="0" cy="-8" rx="5.2" ry="7.4" transform="rotate(144)"/>
+                    <ellipse cx="0" cy="-8" rx="5.2" ry="7.4" transform="rotate(216)"/>
+                    <ellipse cx="0" cy="-8" rx="5.2" ry="7.4" transform="rotate(288)"/>
+                  </g>
+                  <circle r="3.3" fill="#efc466" stroke="#26332b" stroke-width="1.55"/>
+                  <circle cx="-1" cy="-1" r="1" fill="#fff6db" opacity=".85"/>
+                </g>
+              </g>
+            </g>
+            <g transform="translate(340 122)">
+              <g class="flower flower--b">
+                <g transform="rotate(17) scale(.82)">
+                  <g fill="#e86855" stroke="#26332b" stroke-width="1.55" stroke-linejoin="round">
+                    <ellipse cx="0" cy="-8" rx="5.2" ry="7.4"/>
+                    <ellipse cx="0" cy="-8" rx="5.2" ry="7.4" transform="rotate(72)"/>
+                    <ellipse cx="0" cy="-8" rx="5.2" ry="7.4" transform="rotate(144)"/>
+                    <ellipse cx="0" cy="-8" rx="5.2" ry="7.4" transform="rotate(216)"/>
+                    <ellipse cx="0" cy="-8" rx="5.2" ry="7.4" transform="rotate(288)"/>
+                  </g>
+                  <circle r="3.3" fill="#efc466" stroke="#26332b" stroke-width="1.7"/>
+                  <circle cx="-1" cy="-1" r="1" fill="#fff6db" opacity=".85"/>
+                </g>
+              </g>
+            </g>
+          </g>
+
+          <g class="state-fx state-zzz" fill="#4c5c51">
+            <text x="300" y="114" font-size="18" font-weight="700">z</text>
+            <text x="322" y="86" font-size="24" font-weight="700">z</text>
+            <text x="348" y="56" font-size="30" font-weight="700">Z</text>
+          </g>
+
+          <g class="state-fx state-dots" fill="#5b675e">
+            <circle cx="356" cy="116" r="4"/>
+            <circle cx="372" cy="116" r="4"/>
+            <circle cx="388" cy="116" r="4"/>
+          </g>
+
+          <g class="state-fx state-cloud">
+            <path d="M315 106C306 106 300 100 300 92C300 84 307 78 316 78C319 68 328 60 339 60C351 60 360 69 361 81C370 81 377 88 377 97C377 104 371 110 363 110Z"
+                  fill="#bbc4bb" stroke="#6b796d" stroke-width="2.2" stroke-linejoin="round"/>
+            <path class="rain" d="M322 119l-3 9M344 119l-3 9M366 119l-3 9"
+                  fill="none" stroke="#8eb7bd" stroke-width="3" stroke-linecap="round"/>
+          </g>
+
+          <g class="motion-lines" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+            <path d="M49 178C33 195 24 218 23 242"/>
+            <path d="M411 178C427 195 436 218 437 242"/>
+            <path d="M66 295C57 310 54 326 56 342"/>
+            <path d="M394 295C403 310 406 326 404 342"/>
+            <path d="M86 112C78 105 68 100 58 97"/>
+            <path d="M374 112C382 105 392 100 402 97"/>
+          </g>
+
+          <!-- Invisible head hit-area used for hover-petting -->
+          <ellipse id="headZone" class="head-zone" cx="230" cy="158" rx="136" ry="106"
+                   fill="transparent" style="pointer-events: all;"/>
+        </svg>

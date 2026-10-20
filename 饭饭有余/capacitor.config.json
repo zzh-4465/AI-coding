@@ -1,0 +1,10 @@
+{
+  "appId": "com.fanfanyouyu.app",
+  "appName": "饭饭有余",
+  "webDir": "dist",
+  "backgroundColor": "#F7FAF6",
+  "android": {
+    "allowMixedContent": false,
+    "backgroundColor": "#F7FAF6"
+  }
+}

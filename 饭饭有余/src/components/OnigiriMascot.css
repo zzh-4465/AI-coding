@@ -1,0 +1,637 @@
+.onigiri-art { --ease-spring: cubic-bezier(.2,.8,.2,1.25); display:block; width:100%; height:100%; }
+.onigiri-art .mascot { display:block; width:100%; height:100%; overflow:visible; }
+.onigiri-art .ahoge { display: none; }
+.onigiri-art .eye-inner { animation: onigiriBlink 5.8s ease-in-out infinite; }
+@keyframes onigiriBlink { 0%, 93%, 98%, 100% { transform: scaleY(1); } 95%, 96% { transform: scaleY(.08); } }
+.onigiri-art .character-idle,
+.onigiri-art .body-breathe,
+.onigiri-art .hand,
+.onigiri-art .hand-ball,
+.onigiri-art .bag-pouch,
+.onigiri-art .bag-hang,
+.onigiri-art .ahoge,
+.onigiri-art .eye-track,
+.onigiri-art .eye-inner,
+.onigiri-art .mascot-shadow{
+  will-change: transform;
+}
+.onigiri-art .character-idle{
+  transform-box: view-box;
+  transform-origin: 230px 420px;
+  animation: idleFloat 5.2s ease-in-out infinite;
+}
+.onigiri-art .body-breathe{
+  transform-box: view-box;
+  transform-origin: 230px 420px;
+  animation: bodyBreathe 4.2s ease-in-out infinite;
+}
+.onigiri-art .mascot-shadow{
+  transform-box: view-box;
+  transform-origin: 230px 438px;
+  animation: shadowBreathe 4.2s ease-in-out infinite;
+}
+.onigiri-art .hand--l{
+  transform-box: view-box;
+  transform-origin: 82px 348px;
+  animation: handIdleL 4.6s ease-in-out infinite;
+}
+.onigiri-art .hand--r{
+  transform-box: view-box;
+  transform-origin: 378px 348px;
+  animation: handIdleR 4.6s ease-in-out infinite;
+}
+.onigiri-art .hand-ball{
+  transform-box: view-box;
+  transform-origin: 59px 348px;
+  animation: handBobL 4.8s ease-in-out infinite;
+}
+.onigiri-art .hand--r .hand-ball{
+  transform-origin: 401px 348px;
+  animation-name: handBobR;
+  animation-delay: -1.15s;
+}
+.onigiri-art .ahoge{
+  transform-box: view-box;
+  transform-origin: 238px 72px;
+  animation: ahogeSway 3.8s ease-in-out infinite;
+}
+.onigiri-art .eye-track{
+  transform: translate(var(--look-x, 0px), var(--look-y, 0px));
+}
+.onigiri-art .eye-inner{
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform .075s ease;
+}
+@keyframes idleFloat{
+  0%,100%{ transform: translateY(2px) rotate(-.8deg); }
+  34%{ transform: translateY(-6px) rotate(.55deg); }
+  68%{ transform: translateY(-1px) rotate(1.1deg); }
+}
+@keyframes bodyBreathe{
+  0%,100%{ transform: scale(1, 1); }
+  50%{ transform: scale(1.007, .993); }
+}
+@keyframes shadowBreathe{
+  0%,100%{ transform: scale(1); opacity: .2; }
+  50%{ transform: scale(.94); opacity: .17; }
+}
+@keyframes handIdleL{
+  0%,100%{ transform: rotate(0deg); }
+  40%{ transform: rotate(-7deg); }
+  72%{ transform: rotate(4deg); }
+}
+@keyframes handIdleR{
+  0%,100%{ transform: rotate(0deg); }
+  40%{ transform: rotate(7deg); }
+  72%{ transform: rotate(-4deg); }
+}
+@keyframes handBobL{
+  0%,100%{ transform: translateY(0); }
+  48%{ transform: translateY(-2px); }
+  74%{ transform: translateY(1px); }
+}
+@keyframes handBobR{
+  0%,100%{ transform: translateY(0); }
+  44%{ transform: translateY(-1.5px); }
+  70%{ transform: translateY(.8px); }
+}
+.onigiri-art .mascot[data-state="bright"] .character-idle{
+  animation: brightFloat 4.1s ease-in-out infinite;
+}
+.onigiri-art .mascot[data-state="sleepy"] .character-idle{
+  animation: sleepySway 6.2s ease-in-out infinite;
+}
+.onigiri-art .mascot[data-state="blank"] .character-idle{
+  animation: blankSway 7.6s ease-in-out infinite;
+}
+.onigiri-art .mascot[data-state="low"] .character-idle{
+  animation: lowSway 6.8s ease-in-out infinite;
+}
+@keyframes brightFloat{
+  0%,100%{ transform: translateY(-2px) rotate(-1.2deg); }
+  35%{ transform: translateY(-9px) rotate(.7deg); }
+  70%{ transform: translateY(-4px) rotate(1.2deg); }
+}
+@keyframes sleepySway{
+  0%,100%{ transform: translateY(3px) rotate(3.1deg); }
+  50%{ transform: translateY(5px) rotate(4.4deg); }
+}
+@keyframes blankSway{
+  0%,100%{ transform: translateY(2px) rotate(-.7deg); }
+  50%{ transform: translateY(1px) rotate(.5deg); }
+}
+@keyframes lowSway{
+  0%,100%{ transform: translateY(8px) rotate(-2.4deg); }
+  50%{ transform: translateY(9px) rotate(-1.2deg); }
+}
+.onigiri-art .mascot[data-state="bright"] .hand-ball{
+  animation: brightHands 2.8s ease-in-out infinite;
+}
+.onigiri-art .mascot[data-state="bright"] .hand--r .hand-ball{
+  animation-delay: .14s;
+}
+.onigiri-art .mascot[data-state="sleepy"] .hand-ball{
+  animation: sleepyHands 6.4s ease-in-out infinite;
+}
+.onigiri-art .mascot[data-state="blank"] .hand-ball{
+  animation: blankHands 7.2s ease-in-out infinite;
+}
+.onigiri-art .mascot[data-state="low"] .hand-ball{
+  animation: lowHands 6.8s ease-in-out infinite;
+}
+@keyframes brightHands{
+  0%,100%{ transform: translateY(-4px) scale(1); }
+  50%{ transform: translateY(-11px) scale(1.03); }
+}
+@keyframes sleepyHands{
+  0%,100%{ transform: translateY(3px); }
+  50%{ transform: translateY(5px); }
+}
+@keyframes blankHands{
+  0%,100%{ transform: translateY(2px); }
+  50%{ transform: translateY(1px); }
+}
+@keyframes lowHands{
+  0%,100%{ transform: translateY(7px); }
+  50%{ transform: translateY(8px); }
+}
+.onigiri-art .mascot[data-state="bright"] .ahoge{
+  animation: ahogeBright 3s ease-in-out infinite;
+}
+.onigiri-art .mascot[data-state="sleepy"] .ahoge{
+  animation: ahogeDroop 5.2s ease-in-out infinite;
+}
+.onigiri-art .mascot[data-state="blank"] .ahoge{
+  animation: ahogeDroop 7s ease-in-out infinite;
+}
+.onigiri-art .mascot[data-state="low"] .ahoge{
+  animation: ahogeDroop 6s ease-in-out infinite;
+}
+.onigiri-art .mascot[data-state="sleepy"] .body-breathe,
+.onigiri-art .mascot[data-state="low"] .body-breathe{
+  animation-duration: 7s;
+}
+@keyframes ahogeBright{
+  0%,100%{ transform: rotate(-4deg); }
+  45%{ transform: rotate(8deg); }
+  72%{ transform: rotate(1deg); }
+}
+@keyframes ahogeDroop{
+  0%,100%{ transform: rotate(8deg); }
+  50%{ transform: rotate(12deg); }
+}
+.onigiri-art .mascot[data-mood="happy"] .hand-ball{
+  animation: happyHands 1.35s ease-in-out infinite;
+}
+.onigiri-art .mascot[data-mood="happy"] .hand--r .hand-ball{
+  animation-delay: .09s;
+}
+@keyframes happyHands{
+  0%, 100%{ transform: translateY(0) scale(1); }
+  24%{ transform: translateY(-18px) scale(1.05); }
+  46%{ transform: translateY(-9px) scale(1); }
+  68%{ transform: translateY(-14px) scale(1.03); }
+}
+@keyframes ahogeSway{
+  0%,100%{ transform: rotate(-2deg); }
+  42%{ transform: rotate(5deg); }
+  75%{ transform: rotate(1deg); }
+}
+.onigiri-art .eye,
+.onigiri-art .eye-happy,
+.onigiri-art .eye-dizzy,
+.onigiri-art .eye-sleepy,
+.onigiri-art .eye-blank,
+.onigiri-art .eye-low,
+.onigiri-art .mouth-default,
+.onigiri-art .mouth-happy,
+.onigiri-art .mouth-dizzy,
+.onigiri-art .mouth-oops,
+.onigiri-art .mouth-yawn,
+.onigiri-art .mouth-flat,
+.onigiri-art .mouth-frown,
+.onigiri-art .blush,
+.onigiri-art .tear{
+  transition: opacity .18s ease;
+}
+.onigiri-art .eye-happy,
+.onigiri-art .eye-dizzy,
+.onigiri-art .eye-sleepy,
+.onigiri-art .eye-blank,
+.onigiri-art .eye-low,
+.onigiri-art .mouth-happy,
+.onigiri-art .mouth-dizzy,
+.onigiri-art .mouth-oops,
+.onigiri-art .mouth-yawn,
+.onigiri-art .mouth-flat,
+.onigiri-art .mouth-frown,
+.onigiri-art .tear{
+  opacity: 0;
+}
+.onigiri-art .mascot[data-state="bright"]:is([data-mood="idle"],
+[data-mood="curious"]) .mouth-default{ opacity: 0; }
+.onigiri-art .mascot[data-state="bright"]:is([data-mood="idle"],
+[data-mood="curious"]) .mouth-happy{ opacity: 1; }
+.onigiri-art .mascot[data-state="bright"] .blush{ opacity: .86; }
+.onigiri-art .mascot[data-state="sleepy"]:is([data-mood="idle"],
+[data-mood="curious"]) .eye{ opacity: 0; }
+.onigiri-art .mascot[data-state="sleepy"]:is([data-mood="idle"],
+[data-mood="curious"]) .eye-sleepy{ opacity: 1; }
+.onigiri-art .mascot[data-state="sleepy"]:is([data-mood="idle"],
+[data-mood="curious"]) .mouth-default{ opacity: 0; }
+.onigiri-art .mascot[data-state="sleepy"]:is([data-mood="idle"],
+[data-mood="curious"]) .mouth-yawn{ opacity: 1; }
+.onigiri-art .mascot[data-state="sleepy"] .blush{ opacity: .3; }
+.onigiri-art .mascot[data-state="blank"]:is([data-mood="idle"],
+[data-mood="curious"]) .eye{ opacity: 0; }
+.onigiri-art .mascot[data-state="blank"]:is([data-mood="idle"],
+[data-mood="curious"]) .eye-blank{ opacity: 1; }
+.onigiri-art .mascot[data-state="blank"]:is([data-mood="idle"],
+[data-mood="curious"]) .mouth-default{ opacity: 0; }
+.onigiri-art .mascot[data-state="blank"]:is([data-mood="idle"],
+[data-mood="curious"]) .mouth-flat{ opacity: 1; }
+.onigiri-art .mascot[data-state="blank"] .blush{ opacity: .17; }
+.onigiri-art .mascot[data-state="low"]:is([data-mood="idle"],
+[data-mood="curious"]) .eye{ opacity: 0; }
+.onigiri-art .mascot[data-state="low"]:is([data-mood="idle"],
+[data-mood="curious"]) .eye-low{ opacity: 1; }
+.onigiri-art .mascot[data-state="low"]:is([data-mood="idle"],
+[data-mood="curious"]) .mouth-default{ opacity: 0; }
+.onigiri-art .mascot[data-state="low"]:is([data-mood="idle"],
+[data-mood="curious"]) .mouth-frown{ opacity: 1; }
+.onigiri-art .mascot[data-state="low"]:is([data-mood="idle"],
+[data-mood="curious"]) .tear{
+  opacity: .8;
+  animation: tearSlide 4.5s ease-in-out infinite;
+}
+.onigiri-art .mascot[data-state="low"] .blush{ opacity: .08; }
+@keyframes tearSlide{
+  0%, 100%{ transform: translateY(0); opacity: .2; }
+  30%{ opacity: .8; }
+  70%{ transform: translateY(5px); opacity: .7; }
+}
+.onigiri-art .mascot[data-mood="happy"] .eye{ opacity: 0; }
+.onigiri-art .mascot[data-mood="happy"] .eye-happy{ opacity: 1; }
+.onigiri-art .mascot[data-mood="happy"] .mouth-default{ opacity: 0; }
+.onigiri-art .mascot[data-mood="happy"] .mouth-happy{ opacity: 1; }
+.onigiri-art .mascot[data-mood="happy"] .blush{ opacity: .92; }
+.onigiri-art .mascot[data-mood="dizzy"] .eye{ opacity: 0; }
+.onigiri-art .mascot[data-mood="dizzy"] .eye-dizzy{ opacity: 1; }
+.onigiri-art .mascot[data-mood="dizzy"] .mouth-default{ opacity: 0; }
+.onigiri-art .mascot[data-mood="dizzy"] .mouth-dizzy{ opacity: 1; }
+.onigiri-art .mascot.is-blinking .eye-inner{ transform: scaleY(.08); }
+.onigiri-art .mascot.is-poked .mouth-default,
+.onigiri-art .mascot.is-poked .mouth-happy{ opacity: 0; }
+.onigiri-art .mascot.is-poked .mouth-oops{ opacity: 1; }
+.onigiri-art .mascot.is-poked .blush{ opacity: .9; }
+.onigiri-art .mascot.is-petted .mouth-default{ opacity: 0; }
+.onigiri-art .mascot.is-petted .mouth-happy{ opacity: 1; }
+.onigiri-art .bag-pouch{
+  transform-box: view-box;
+  transform-origin: 315px 336px;
+  transition: transform .55s var(--ease-spring);
+}
+.onigiri-art .bag-hang{
+  transform-box: view-box;
+  transform-origin: 315px 336px;
+  animation: bagSway 5.2s ease-in-out infinite;
+}
+@keyframes bagSway{
+  0%, 100%{ transform: rotate(2.2deg); }
+  50%{ transform: rotate(3.6deg); }
+}
+.onigiri-art .bag-full,
+.onigiri-art .bag-empty,
+.onigiri-art .bag-coin,
+.onigiri-art .bag-wrinkles{
+  transition: opacity .18s ease;
+}
+.onigiri-art .bag-full{
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.onigiri-art .bag-empty{
+  opacity: 0;
+  transform-box: view-box;
+  transform-origin: 315px 336px;
+}
+.onigiri-art .bag-coin--b{ opacity: 0; }
+.onigiri-art .bag-wrinkles{ opacity: 0; }
+.onigiri-art .bag-tag text{
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  fill: #30372f;
+}
+.onigiri-art .mascot[data-state="bright"] .bag-coin--b{ opacity: 1; }
+.onigiri-art .mascot[data-state="sleepy"] .bag-coin,
+.onigiri-art .mascot[data-state="blank"] .bag-coin,
+.onigiri-art .mascot[data-state="low"] .bag-coin{
+  opacity: 0;
+}
+.onigiri-art .mascot[data-state="sleepy"] .bag-pouch,
+.onigiri-art .mascot[data-state="blank"] .bag-pouch{
+  transform: rotate(2.2deg) scale(.95, .58);
+}
+.onigiri-art .mascot[data-state="sleepy"] .bag-wrinkles,
+.onigiri-art .mascot[data-state="blank"] .bag-wrinkles{
+  opacity: .7;
+}
+.onigiri-art .mascot[data-state="low"] .bag-full{
+  opacity: 0;
+  animation: bagFlipDown .8s cubic-bezier(.28, .7, .32, 1) both;
+}
+.onigiri-art .mascot[data-state="low"] .bag-empty{
+  opacity: 1;
+  animation: bagSettle .9s cubic-bezier(.24, 1.16, .34, 1) .3s both;
+}
+@keyframes bagFlipDown{
+  0%{ transform: translateY(0) scaleY(1) rotate(0deg); opacity: 1; }
+  30%{ transform: translateY(1px) scaleY(.18) rotate(1deg); opacity: 1; }
+  58%{ transform: translateY(3px) scaleY(-.45) rotate(-2deg); opacity: .65; }
+  100%{ transform: translateY(6px) scaleY(-1) rotate(-3deg); opacity: 0; }
+}
+@keyframes bagSettle{
+  0%{ transform: translateY(-16px) rotate(4deg); opacity: 0; }
+  35%{ opacity: 1; }
+  60%{ transform: translateY(3px) rotate(-4deg); }
+  82%{ transform: translateY(-1px) rotate(2deg); }
+  100%{ transform: translateY(0) rotate(0deg); opacity: 1; }
+}
+.onigiri-art .state-fx{
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s ease;
+}
+.onigiri-art .mascot[data-state="bright"] .state-flowers{ opacity: 1; }
+.onigiri-art .mascot[data-state="sleepy"] .state-zzz{ opacity: 1; }
+.onigiri-art .mascot[data-state="blank"] .state-dots{ opacity: 1; }
+.onigiri-art .mascot[data-state="low"] .state-cloud{ opacity: 1; }
+.onigiri-art .mascot[data-mood="happy"] .state-zzz,
+.onigiri-art .mascot[data-mood="happy"] .state-dots,
+.onigiri-art .mascot[data-mood="happy"] .state-cloud,
+.onigiri-art .mascot[data-mood="dizzy"] .state-fx,
+.onigiri-art .mascot.is-spinning .state-fx{
+  opacity: 0;
+}
+.onigiri-art .state-flowers .flower{
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: flowerBop 3.4s ease-in-out infinite;
+}
+.onigiri-art .state-flowers .flower--b{
+  animation-delay: .55s;
+  animation-duration: 3.8s;
+}
+@keyframes flowerBop{
+  0%, 100%{ transform: rotate(-3deg) translateY(0); }
+  45%{ transform: rotate(4deg) translateY(-2px); }
+  72%{ transform: rotate(1deg) translateY(0); }
+}
+.onigiri-art .state-zzz text{
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: zzzFloat 3.4s ease-in-out infinite;
+}
+.onigiri-art .state-zzz text:nth-child(2){ animation-delay: .55s; }
+.onigiri-art .state-zzz text:nth-child(3){ animation-delay: 1.1s; }
+@keyframes zzzFloat{
+  0%, 100%{ opacity: .22; transform: translateY(3px) rotate(-4deg); }
+  45%{ opacity: .95; transform: translateY(-7px) rotate(4deg); }
+  70%{ opacity: .55; transform: translateY(-2px) rotate(1deg); }
+}
+.onigiri-art .state-dots circle{
+  animation: dotBlink 2.5s ease-in-out infinite;
+}
+.onigiri-art .state-dots circle:nth-child(2){ animation-delay: .28s; }
+.onigiri-art .state-dots circle:nth-child(3){ animation-delay: .56s; }
+@keyframes dotBlink{
+  0%, 100%{ opacity: .2; transform: translateY(0); }
+  40%{ opacity: .85; transform: translateY(-2px); }
+  70%{ opacity: .45; transform: translateY(0); }
+}
+.onigiri-art .state-cloud{
+  animation: cloudFloat 4.8s ease-in-out infinite;
+}
+.onigiri-art .state-cloud .rain{
+  animation: rainPulse 2.2s ease-in-out infinite;
+}
+@keyframes cloudFloat{
+  0%, 100%{ transform: translateY(0) rotate(-1deg); }
+  50%{ transform: translateY(-5px) rotate(1deg); }
+}
+@keyframes rainPulse{
+  0%, 100%{ opacity: .25; transform: translateY(0); }
+  55%{ opacity: .9; transform: translateY(4px); }
+}
+.onigiri-art .mascot.is-poked .character-idle{
+  animation: pokeSquish .64s var(--ease-spring) both;
+}
+.onigiri-art .mascot.is-poked .mascot-shadow{
+  animation: pokeShadow .64s var(--ease-spring) both;
+}
+.onigiri-art .mascot.is-poked .hand--l{
+  animation: handFlailL .64s var(--ease-spring) both;
+}
+.onigiri-art .mascot.is-poked .hand--r{
+  animation: handFlailR .64s var(--ease-spring) both;
+}
+.onigiri-art .mascot.is-poked .ahoge{
+  animation: ahogeBoing .64s var(--ease-spring) both;
+}
+.onigiri-art .mascot.is-poked .eye-inner{
+  animation: eyeSqueeze .64s ease both;
+}
+.onigiri-art .mascot.is-poked .hand-ball{
+  animation: pokeHands .64s var(--ease-spring) both;
+}
+@keyframes pokeSquish{
+  0%{ transform: translateY(0) scale(1, 1); }
+  16%{ transform: translateY(10px) scale(1.095, .835); }
+  38%{ transform: translateY(-11px) scale(.945, 1.075); }
+  58%{ transform: translateY(4px) scale(1.035, .965); }
+  76%{ transform: translateY(-3px) scale(.992, 1.018); }
+  100%{ transform: translateY(0) scale(1, 1); }
+}
+@keyframes pokeShadow{
+  0%{ transform: scale(1); opacity: .2; }
+  16%{ transform: scale(1.12); opacity: .24; }
+  38%{ transform: scale(.9); opacity: .13; }
+  65%{ transform: scale(1.04); opacity: .2; }
+  100%{ transform: scale(1); opacity: .2; }
+}
+@keyframes handFlailL{
+  0%{ transform: rotate(0deg); }
+  24%{ transform: rotate(-27deg); }
+  50%{ transform: rotate(16deg); }
+  76%{ transform: rotate(-8deg); }
+  100%{ transform: rotate(0deg); }
+}
+@keyframes handFlailR{
+  0%{ transform: rotate(0deg); }
+  24%{ transform: rotate(27deg); }
+  50%{ transform: rotate(-16deg); }
+  76%{ transform: rotate(8deg); }
+  100%{ transform: rotate(0deg); }
+}
+@keyframes pokeHands{
+  0%{ transform: translateY(0); }
+  22%{ transform: translateY(-10px); }
+  48%{ transform: translateY(3px); }
+  72%{ transform: translateY(-3px); }
+  100%{ transform: translateY(0); }
+}
+@keyframes ahogeBoing{
+  0%{ transform: rotate(-2deg); }
+  20%{ transform: rotate(-20deg); }
+  45%{ transform: rotate(17deg); }
+  70%{ transform: rotate(-9deg); }
+  100%{ transform: rotate(-2deg); }
+}
+@keyframes eyeSqueeze{
+  0%, 100%{ transform: scaleY(1); }
+  18%, 72%{ transform: scaleY(.09); }
+  42%{ transform: scaleY(.34); }
+}
+.onigiri-art .mascot.is-petted .character-idle{
+  animation: petSway 2.1s ease-in-out infinite;
+}
+.onigiri-art .mascot.is-petted .hand--l,
+.onigiri-art .mascot.is-petted .hand--r{
+  animation: none;
+}
+.onigiri-art .mascot.is-petted .hand-ball{
+  animation: petHands 1.25s ease-in-out infinite;
+}
+.onigiri-art .mascot.is-petted .hand--r .hand-ball{
+  animation-delay: .12s;
+}
+.onigiri-art .mascot.is-petted .ahoge{
+  animation: ahogeHappy 1.8s ease-in-out infinite;
+}
+@keyframes petSway{
+  0%, 100%{ transform: translateY(2px) rotate(-1.4deg); }
+  50%{ transform: translateY(-5px) rotate(1.5deg); }
+}
+@keyframes petHands{
+  0%, 100%{ transform: translateY(-3px); }
+  48%{ transform: translateY(-20px); }
+  72%{ transform: translateY(-14px); }
+}
+@keyframes ahogeHappy{
+  0%, 100%{ transform: rotate(-2deg); }
+  50%{ transform: rotate(9deg); }
+}
+.onigiri-art .mascot.is-spinning [data-character]{
+  transform-box: view-box;
+  transform-origin: 230px 270px;
+  animation: characterSpin 1.32s cubic-bezier(.5, .02, .25, 1) both;
+}
+@keyframes characterSpin{
+  0%{ transform: rotate(0deg) translateY(0) scale(1); }
+  14%{ transform: rotate(-10deg) translateY(-8px) scale(1.02); }
+  55%{ transform: rotate(190deg) translateY(-16px) scale(.98); }
+  82%{ transform: rotate(342deg) translateY(-4px) scale(1.01); }
+  100%{ transform: rotate(360deg) translateY(0) scale(1); }
+}
+.onigiri-art .mascot.is-dizzy .character-idle{
+  animation: dizzyWobble 1.4s ease-in-out 2;
+}
+@keyframes dizzyWobble{
+  0%, 100%{ transform: translateY(2px) rotate(-1deg); }
+  25%{ transform: translateX(-4px) rotate(-4deg); }
+  50%{ transform: translateY(-3px) rotate(3deg); }
+  75%{ transform: translateX(4px) rotate(4deg); }
+}
+.onigiri-art .motion-lines{
+  opacity: 0;
+  color: var(--ink);
+  transition: opacity .12s ease;
+}
+.onigiri-art .mascot.is-spinning .motion-lines{
+  opacity: .42;
+  animation: linesFlash 1.32s ease both;
+}
+@keyframes linesFlash{
+  0%, 100%{ opacity: 0; }
+  20%, 65%{ opacity: .42; }
+}
+.onigiri-art .fx-layer{
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  overflow: visible;
+  pointer-events: none;
+}
+.onigiri-art .fx-particle{
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+  animation: fxFloat var(--dur, 1.1s) cubic-bezier(.17, .67, .3, 1) forwards;
+}
+.onigiri-art .fx-rice{
+  width: 8px;
+  height: 15px;
+  border: 1px solid rgba(38,51,43,.32);
+  border-radius: 50%;
+  background: #fffaf0;
+  box-shadow: inset -1px -2px 0 rgba(218,202,170,.5);
+}
+.onigiri-art .fx-nori{
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--nori);
+  transform: rotate(22deg);
+}
+.onigiri-art .fx-heart{
+  width: auto;
+  height: auto;
+  font-family: Georgia, serif;
+  font-size: 21px;
+  line-height: 1;
+  color: var(--coral);
+  text-shadow: 0 1px 0 rgba(255,250,240,.7);
+}
+.onigiri-art .fx-spark{
+  width: auto;
+  height: auto;
+  font-size: 15px;
+  line-height: 1;
+  color: #b88e45;
+}
+@keyframes fxFloat{
+  0%{
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.25) rotate(0deg);
+  }
+  14%{ opacity: 1; }
+  72%{ opacity: .92; }
+  100%{
+    opacity: 0;
+    transform:
+      translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, -100px)))
+      scale(var(--scale, 1))
+      rotate(var(--rot, 30deg));
+  }
+}
+
+.global-pet-button .onigiri-mascot { width: 76px; height: 82px; transform: none; animation: none; filter: none; }
+.onigiri-mascot .onigiri-art { position: absolute; inset: -9px -7px; width: calc(100% + 14px); height: calc(100% + 18px); }
+.global-pet-button .onigiri-mascot .onigiri-art { inset: 0; width: 100%; height: 100%; }
+.global-pet-button:active .onigiri-art .body-breathe { animation: pokeSquish .64s var(--ease-spring) both; }
+.pet-action-hello .onigiri-mascot { transform: scale(1.25); animation: none; }
+.pet-action-sheet { background: linear-gradient(155deg, #fffdf6, var(--surface) 65%); border: 1px solid var(--line); }
+.pet-action-sheet .pet-stats { background: linear-gradient(120deg, var(--green-soft), #f2f1df); border: 1px solid var(--line); }
+.pet-action-grid button { transition: transform .18s ease, border-color .18s ease, background .18s ease; }
+.pet-action-grid button:hover { border-color: var(--green); background: var(--green-soft); }
+.pet-action-grid button:active { transform: scale(.98); }
+.pet-action-grid button:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .onigiri-art *, .pet-action-grid button { animation: none !important; transition: none !important; }
+}
